@@ -4,7 +4,7 @@
  * @LastEditors: DuRuofu
  * @LastEditTime: 2024-04-07 09-33-37
  * @FilePath: \STM32F103_Demo\02.UART\01.USART\Users\Components\Usart\uart_1.c
- * @Description: 串口3逻辑
+ * @Description: 串口1逻辑(用于debug)
  * Copyright (c) 2023 by duruofu@foxmail.com All Rights Reserved.
  */
 
@@ -31,7 +31,7 @@ void UART1_Init(void)
   HAL_UART_Receive_IT(&UART_HANDLE, &Uart_RxBuffer_1, 1);
 }
 
-// 串口3接收完成回调函数
+// 串口接收完成回调函数
 void UART1_RxCpltCallback(UART_HandleTypeDef *huart)
 {
   /* Prevent unused argument(s) compilation warning */
@@ -51,28 +51,29 @@ void UART1_RxCpltCallback(UART_HandleTypeDef *huart)
     RxBuffer_1[Uart_Rx_Cnt_1++] = Uart_RxBuffer_1;
     // 单字符判断
 
-    if (Uart_RxBuffer_1 == '1') // 当发送1时，翻转电平
-    {
-      printf("发送1");
-    }
-    else if (Uart_RxBuffer_1 == '2') // 当发送2时，翻转电平
-    {
-      printf("发送2");
-    }
-    else if (Uart_RxBuffer_1 == '3') // 当发送3时，翻转电平
-    {
-      printf("发送3");
-    }
-    else if (Uart_RxBuffer_1 == '4') // 当发送4时，翻转电平
-    {
-      printf("发送4");
-    }
+    // if (Uart_RxBuffer_1 == '1') // 当发送1时，翻转电平
+    // {
+    //   printf("发送1");
+    // }
+    // else if (Uart_RxBuffer_1 == '2') // 当发送2时，翻转电平
+    // {
+    //   printf("发送2");
+    // }
+    // else if (Uart_RxBuffer_1 == '3') // 当发送3时，翻转电平
+    // {
+    //   printf("发送3");
+    // }
+    // else if (Uart_RxBuffer_1 == '4') // 当发送4时，翻转电平
+    // {
+    //   printf("发送4");
+    // }
+
+    // 结束位判断(\r\n)
     if ((RxBuffer_1[Uart_Rx_Cnt_1 - 1] == 0x0A) && (RxBuffer_1[Uart_Rx_Cnt_1 - 2] == 0x0D)) // 判断结束位
     {
       // 这里可以写多字节消息的判断
       HAL_UART_Transmit(&UART_HANDLE, (uint8_t *)&RxBuffer_1, Uart_Rx_Cnt_1, 0xFFFF); // 将收到的信息发送出去
-      while (HAL_UART_GetState(&UART_HANDLE) == HAL_UART_STATE_BUSY_TX)
-        ; // 检测UART发送结束
+      while (HAL_UART_GetState(&UART_HANDLE) == HAL_UART_STATE_BUSY_TX); // 检测UART发送结束
 
       // 复位
       Uart_Rx_Cnt_1 = 0;

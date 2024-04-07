@@ -2,7 +2,7 @@
  * @Author: DuRuofu duruofu@qq.com
  * @Date: 2024-02-12 16-22-52
  * @LastEditors: DuRuofu
- * @LastEditTime: 2024-04-07 09-34-05
+ * @LastEditTime: 2024-04-07 09-48-49
  * @FilePath: \STM32F103_Demo\02.UART\01.USART\Users\Components\Usart\uart_it_config.c
  * @Description: 串口中断配置(HAL)
  * Copyright (c) 2024 by duruofu@foxmail.com All Rights Reserved.
@@ -19,7 +19,7 @@ void UART_IT_Init(void)
     // 串口1接收中断初始化
     UART1_Init();
     // 串口2接收中断初始化
-    // USART2_Init();
+    UART2_Init();
     // 串口3接收中断初始化
     // UART3_Init();
 }
@@ -33,7 +33,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     }
     else if (huart->Instance == USART2)
     {
-        // UART2_RxCpltCallback();
+        UART2_RxCpltCallback(huart);
     }
     else if (huart->Instance == USART3)
     {
@@ -50,7 +50,7 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
     }
     else if (huart->Instance == USART2)
     {
-        // USART2_ErrorCallback(huart);
+        UART2_ErrorCallback(huart);
     }
     else if (huart->Instance == USART3)
     {

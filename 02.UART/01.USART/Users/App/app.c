@@ -24,5 +24,8 @@ void App_Task(void)
 {
 	Led_Toggle();
 	HAL_Delay(1000);
-    printf("sys task runing--\r\n");
+	// 测试串口1发送
+  printf("[UART1] sys task runing--\r\n");
+	// 测试串口2发送
+	HAL_UART_Transmit(&huart2, (uint8_t *)"[UART2] sys task runing--\r\n", sizeof("[UART2] sys task runing--\r\n"), 0xFFFF);
 }
