@@ -1,5 +1,6 @@
 #include "main.h"
 #include "app.h"
+#include "key.h"
 
 #define TAG "APP"
 
@@ -19,6 +20,6 @@ void App_Init(void)
  */
 void App_Task(void)
 {
-    Led_Toggle();
-	HAL_Delay(2000);
+	//Led_Toggle();
+	HAL_Delay(1000);
 }
